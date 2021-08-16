@@ -431,7 +431,7 @@ class EMVQR {
 
 
     formatCrc(raw: string) {
-        const hash_value = this._sha256('73MjsNDksPawccH2' + raw)
+        const hash_value = this._sha256(process.env.QR_HASH_SECRET + raw)
         const checksum = `${Tag.IDCRC}04${hash_value.slice(-4)}`
         return checksum
     }
