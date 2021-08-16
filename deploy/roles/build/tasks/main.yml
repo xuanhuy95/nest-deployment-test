@@ -1,0 +1,56 @@
+---
+
+- name: Clean "{{ project_temp_root_dir }}"
+  run_once: true
+  delegate_to: localhost
+  file:
+    state: absent
+    path: "{{ project_temp_root_dir }}"
+  when: not is_jenkins
+
+#- name: checkout "{{git_repo}}" "{{git_branch}}" to "{{ code_temp_dir }}"
+#  run_once: true
+#  delegate_to: localhost
+#  local_action: git
+#  args:
+#    repo: "{{git_repo}}"
+#    accept_hostkey: True
+#    recursive: yes
+#    remote: origin
+#    dest: "{{ code_temp_dir }}"
+#    version: "{{git_branch}}"
+#    update: yes
+#  when: not is_jenkins
+
+- name: create "{{ dist_dir }}"
+  run_once: true
+  delegate_to: localhost
+  file:
+    path: "{{ dist_dir }}"
+    state: directory
+
+- name: synchronize from "{{ code_temp_dir }}/" to "{{ dist_dir }}"
+  run_once: true
+  delegate_to: localhost
+  synchronize:
+    partial: yes
+    recursive: yes
+    dest: "{{ dist_dir }}"
+    src: "/Users/xuanhuyjs/CODING/typescript-starter/"
+#    src: "{{ code_temp_dir }}/"
+    use_ssh_args: yes
+
+- name: install packages
+  run_once: true
+  delegate_to: localhost
+  shell: "yarn"
+  args:
+    chdir: "{{ dist_dir }}"
+
+- name: build
+  run_once: true
+  delegate_to: localhost
+#  shell: "yarn build:{{env}}"
+  shell: "yarn build"
+  args:
+    chdir: "{{ dist_dir }}"

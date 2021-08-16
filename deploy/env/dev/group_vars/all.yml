@@ -1,0 +1,38 @@
+---
+organization: mylocal
+project_name: core
+
+service_name: "mylocal_core"
+upstream_name: "mylocal_core_live_backend"
+server_host: dev.mylocal.vn
+django_port: 8711
+env: dev
+
+deploy_project_dir: "/data/src/mylocal/corev2/"
+log_dir: "/var/log/mylocal/core/"
+static_root_dir: "/var/www/dev.mylocal.vn/static/"
+doc_root_dir: "/var/www/dev.mylocal.vn/docs/"
+prometheus_dir: "/data/prometheus"
+
+django_dir: "core"
+django_default_app: "core"
+django_base_dir: "/data/src/mylocal/corev2/core/"
+
+# Gunicorn configuration
+workers: 5
+worker_class: 'gevent'
+
+
+# if run ansible-playbook with -e working_dir then set flag is_jenkins
+is_jenkins: "{{ (working_dir is defined) and (working_dir | length > 0) }}"
+
+# directories for building locally
+build_name: "core"
+default_project_temp_root_dir: '/tmp/core'
+project_temp_root_dir: "{{ working_dir if is_jenkins else default_project_temp_root_dir }}"
+temp_dir: "{{ project_temp_root_dir }}/temp/"
+dist_dir: "{{ project_temp_root_dir }}/build/"
+
+# source code
+git_repo: "git@github.com:nestjs/typescript-starter.git"
+git_branch: master

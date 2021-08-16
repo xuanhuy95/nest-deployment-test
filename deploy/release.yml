@@ -1,0 +1,11 @@
+---
+- name: deploy
+  hosts: server_hosts
+  roles:
+    - release
+
+
+#- name: setup load balancer
+#  hosts: server_hosts
+#  roles:
+#    - setup_nginx

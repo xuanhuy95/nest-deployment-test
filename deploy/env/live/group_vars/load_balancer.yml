@@ -1,0 +1,18 @@
+nginx_sites:
+  live.mylocal.vn:
+    upstream: |-
+      server 10.2.2.122:8711;
+    server_name: |-
+      live.mylocal.vn
+    extra_opt: |-
+      client_max_body_size 0;
+      include conf.d/cors.conf;
+    location_root: |-
+      proxy_pass http://ups_live.mylocal.vn;
+      include conf.d/forwarding_proxy.conf;
+    forwarding_proxy: "0"
+    ssl_enabled: "1"
+    ssl_redirect: "1"
+    ssl_certificate: "/etc/letsencrypt/live/live.mylocal.vn/fullchain.pem"
+    ssl_certificate_key: "/etc/letsencrypt/live/live.mylocal.vn/privkey.pem"
+    ssl_trusted_certificate: "/etc/letsencrypt/live/live.mylocal.vn/chain.pem"

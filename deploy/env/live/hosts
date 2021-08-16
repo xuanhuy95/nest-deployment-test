@@ -1,0 +1,8 @@
+production_app_1 ansible_host=10.2.2.122 ansible_port=22 private_ip=10.2.2.122
+production_gateway_1 ansible_host=13.212.219.30 ansible_port=22 private_ip=10.2.121.72
+
+[django_server_hosts]
+production_app_1
+
+[load_balancer]
+production_gateway_1
