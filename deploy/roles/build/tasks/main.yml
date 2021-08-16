@@ -53,7 +53,6 @@
     src: ".env.encrypted.{{env}}"
     dest: "{{ dist_dir }}/.env"
 
-
 - name: build
   run_once: true
   delegate_to: localhost
