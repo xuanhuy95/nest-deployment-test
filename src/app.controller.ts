@@ -16,7 +16,6 @@ export class AppController {
   }
   @Get('hello-2')
   getHello2(): string {
-    // return 'Hello 123';
     return this.configService.get('DATABASE_USER');
   }
 }
