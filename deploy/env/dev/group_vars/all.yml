@@ -34,5 +34,5 @@ temp_dir: "{{ project_temp_root_dir }}/temp/"
 dist_dir: "{{ project_temp_root_dir }}/build/"
 
 # source code
-git_repo: "git@github.com:nestjs/typescript-starter.git"
+git_repo: "git@github.com:xuanhuy95/nest-deployment-test.git"
 git_branch: master
