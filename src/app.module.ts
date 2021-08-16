@@ -5,7 +5,9 @@ import { TicketModule } from './ticket/ticket.module';
 import { ActivationRequestModule } from './activation-request/activation-request.module';
 import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [TicketModule, ActivationRequestModule, ConfigModule.forRoot()],
+  imports: [TicketModule, ActivationRequestModule, ConfigModule.forRoot({
+    envFilePath: '.env',
+  })],
   controllers: [AppController],
   providers: [AppService],
 })

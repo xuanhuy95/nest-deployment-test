@@ -51,7 +51,7 @@
   delegate_to: localhost
   copy:
     src: ".env.encrypted.{{env}}"
-    dest: "{{ dist_dir }}/.env"
+    dest: "{{ dist_dir }}/dist/.env"
 
 - name: build
   run_once: true
