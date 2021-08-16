@@ -14,10 +14,9 @@ export class AppController {
     throw Error('hello');
     return this.appService.getHello();
   }
-  @Get('hello')
+  @Get('hello-2')
   getHello2(): string {
     // return 'Hello 123';
     return this.configService.get('DATABASE_USER');
-    return this.appService.getHello();
   }
 }
