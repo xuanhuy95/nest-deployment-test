@@ -2,7 +2,7 @@
 - name: deploy
   hosts: server_hosts
   roles:
-    - release
+    - deploy
 
 
 #- name: setup load balancer

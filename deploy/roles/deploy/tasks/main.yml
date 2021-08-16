@@ -1,0 +1,56 @@
+---
+- name: check if "{{ deploy_project_dir }}" exists
+  become: true
+  become_user: root
+  stat: path="{{ deploy_project_dir }}"
+  register: stat_result
+
+- name: create "{{ deploy_project_dir }}"
+  when: not stat_result.stat.exists
+  become: true
+  become_user: root
+  file:
+    path: "{{ deploy_project_dir }}/dist"
+    state: directory
+
+- name: sync from {{ dist_dir }} to {{ deploy_project_dir }}
+  become: true
+  become_user: root
+  synchronize:
+    delete: yes
+    partial: yes
+    recursive: yes
+    dest: "{{ deploy_project_dir }}"
+    src: "{{ dist_dir }}"
+
+- name: export variables
+  become: true
+  become_user: root
+  copy:
+    src: ".env.encrypted.{{env}}"
+    dest: "{{ deploy_project_dir }}/dist/.env"
+
+- name: check pm2 mylocal
+  command: pm2 describe mylocal
+  become: yes
+  become_user: root
+  register: pm2_mylocal_checker
+  failed_when:
+    - pm2_mylocal_checker.stderr
+    - "'mylocal' not in pm2_mylocal_checker.stderr"
+    - "'exist' not in pm2_mylocal_checker.stderr"
+
+- name: start pm2 mylocal if not exist
+  command: pm2 start main.js --name mylocal -i 2
+  become: yes
+  become_user: root
+  when: pm2_mylocal_checker.stderr
+  args:
+    chdir: "{{ deploy_project_dir }}dist/"
+
+- name: reload pm2 mylocal if exist
+  command: pm2 reload mylocal
+  become: yes
+  become_user: root
+  when: not pm2_mylocal_checker.stderr
+
