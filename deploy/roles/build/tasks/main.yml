@@ -56,7 +56,7 @@
 - name: build
   run_once: true
   delegate_to: localhost
-#  shell: "yarn build:{{env}}"
+#  shell: "yarn build:{{env}}"cd d
   shell: "yarn build"
   args:
     chdir: "{{ dist_dir }}"
