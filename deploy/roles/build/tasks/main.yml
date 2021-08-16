@@ -46,13 +46,6 @@
   args:
     chdir: "{{ dist_dir }}"
 
-- name: export variables
-  run_once: true
-  delegate_to: localhost
-  copy:
-    src: ".env.encrypted.{{env}}"
-    dest: "{{ dist_dir }}/dist/.env"
-
 - name: build
   run_once: true
   delegate_to: localhost
