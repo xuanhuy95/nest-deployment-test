@@ -11,14 +11,11 @@ export class AppController {
 
   @Get()
   getHello(): string {
+    throw Error('hello');
     return this.appService.getHello();
   }
   @Get('hello-2')
   getHello2(): string {
-    return this.appService.getHello2();
-  }
-  @Get('hello-3')
-  getHello3(): string {
-    return 'Hello 3';
+    return this.configService.get('DATABASE_USER');
   }
 }
