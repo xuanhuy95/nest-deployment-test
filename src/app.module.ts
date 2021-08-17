@@ -5,6 +5,8 @@ import { TicketModule } from './ticket/ticket.module';
 import { ActivationRequestModule } from './activation-request/activation-request.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MobifoneService } from './mobifone/mobifone.service';
+import { VietguysService } from './vietguys/vietguys.service';
 @Module({
   imports: [
       TicketModule,
